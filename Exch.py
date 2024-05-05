@@ -4,6 +4,8 @@ import ccxt
 
 #"binance", "bybit", "coinex", "kraken", "bitget", "ascendex", "bequant", "bigone","binanceusdm", "bingx", "bitbns", "bitfinex"
 name_exchanges = ['bitbank', 'binance', "bybit"]
+symbol = "BTC/USDT"
+
 
 def get_exchange_instance(id):
     exchange = getattr(ccxt, id)()
