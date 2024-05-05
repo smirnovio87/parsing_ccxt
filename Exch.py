@@ -13,11 +13,10 @@ def fetch_ticker(args):
     try:
         id, exchange, symbol = args
         ticker = exchange.fetch_ticker(symbol)
+        return id, ticker['last']
     except Exception as err:
-            print(f"Unexpected {err=}, {type(err)=}")    
-            data[id] = "НЕ доступна"
-                
-    return id, ticker['last']
+        print(f"Unexpected {err=}, {type(err)=}")    
+        return id, "НЕ доступна"
 
 def price_result(name_exchanges):
     exchanges = {}
