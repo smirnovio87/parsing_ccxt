@@ -2,6 +2,8 @@ import ccxt
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Строит график BTC/USDT 
+
 exchange = ccxt.binance()
 symbol = 'BTC/USDT'
 timeframe = '1h'

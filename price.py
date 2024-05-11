@@ -26,6 +26,7 @@ def symbol_usdt(market, maket_id):
         if symbol.endswith(maket_id):
             usdt_symbol.append(symbol)
     return usdt_symbol
+
 print(symbol_usdt(get_symbol(exchange_id), market_id))
 # Получаем курс на биржах и выводим в словарь
 def price_result(name_exchanges):

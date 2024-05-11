@@ -1,35 +1,29 @@
-import json
-from multiprocessing import Pool
 import ccxt
+import json
+from multiprocessing import Pool, freeze_support
 
-#"binance", "bybit", "coinex", "kraken", "bitget", "ascendex", "bequant", "bigone","binanceusdm", "bingx", "bitbns", "bitfinex"
-name_exchanges = ['bitbank', 'binance', "bybit"]
-symbol = "BTC/USDT"
-
+# "binance", "bybit", "coinex", "kraken", "bitget", "ascendex", "bequant", "bigone","binanceusdm", "bingx", "bitbns", "bitfinex"
+name_exchanges = ["binance", "bybit", "coinex", "kraken"]
+symbol = 'BTC/USDT'
 
 def get_exchange_instance(id):
     exchange = getattr(ccxt, id)()
     return exchange
 
 def fetch_ticker(args):
-    try:
-        id, exchange, symbol = args
-        ticker = exchange.fetch_ticker(symbol)
-        return id, ticker['last']
-    except Exception as err:
-        print(f"Unexpected {err=}, {type(err)=}")    
-        return id, "НЕ доступна"
+    exchange, symbol = args
+    ticker = exchange.fetch_ticker(symbol)
+    return ticker['last']
 
 def price_result(name_exchanges):
     exchanges = {}
     with Pool() as pool:
         exchange_instances = pool.map(get_exchange_instance, name_exchanges)
-        args = [(id, exchange, symbol) for id, exchange in zip(name_exchanges, exchange_instances)]
-        data = dict(pool.starmap(fetch_ticker, args))
-    return data
+        args = [(exchange, symbol) for exchange in exchange_instances]
+        data = pool.map(fetch_ticker, args)
+    return dict(zip(name_exchanges, data))
 
-data_json = price_result(name_exchanges)
-
-with open('btc_usdt_courses_12.json', 'w') as json_file:
-    json.dump(data_json, json_file, indent=4)
-print(data_json)
+if __name__ == '__main__':
+    freeze_support()  # Required for Windows when using multiprocessing
+    data_json = price_result(name_exchanges)
+    print("Test", data_json)
