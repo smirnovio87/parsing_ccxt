@@ -11,4 +11,4 @@ def get_spred():
     df["spread"] = (df["high"] - df["low"]) / df["low"] * 100
     return df
 
-print(get_spred)
+print(get_spred())
