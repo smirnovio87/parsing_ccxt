@@ -1,6 +1,7 @@
 import ccxt
 import pandas as pd
 
+symbol = 'BTC/USDT'
 def detect_trend(prices):
     # Вычисляем изменения цен между последовательными днями
     changes = [prices[i + 1] - prices[i] for i in range(len(prices) - 1)]

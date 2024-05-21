@@ -18,7 +18,7 @@ def get_symbol(exchange_id):
     markets = exchange.load_markets()
     return list(markets.keys())
 
-#Выводим пары только с USDT
+#Выводим пары только с заданно   валютой (market_id="USDT")
 def symbol_usdt(market, maket_id): 
     usdt_symbol = []
     for symbol in market:
