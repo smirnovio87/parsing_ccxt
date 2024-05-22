@@ -5,20 +5,20 @@ exchange = ccxt.bybit()
 markets = exchange.load_markets()
 symbol = "BTC/USDT"
 
-def get_spread_dataframe():
+def get_spread() -> pd.DataFrame:
     """
-    Returns a dataframe with the spread of the given symbol over the last 1 day.
+    функция get_spread_dataframe() возвращает DataFrame, который содержит данные о рассеянии (разнице между высокой и низкой ценами) для заданного символа за последний день.
 
-    The dataframe contains the following columns:
-    - timestamp: the timestamp of each OHLCV point
-    - open: the open price
-    - high: the high price
-    - low: the low price
-    - close: the close price
-    - volume: the trading volume
-    - spread: the spread as a percentage (difference between high and low prices)
+    В DataFrame входят следующие столбцы:
 
-    The dataframe is indexed by the timestamp column.
+    timestamp: метка времени каждого OHLCV-точки
+    open: цена открытия
+    high: наибольшая цена
+    low: наименьшая цена
+    close: цена закрытия
+    volume: объем торгов
+    spread: рассеяние в процентах (разница между наибольшей и наименьшей ценой)
+    DataFrame индексирован по столбцу timestamp.
     """
     # Fetch the OHLCV data for the last day
     ohlcv = exchange.fetch_ohlcv(symbol, timeframe="1d")
@@ -35,4 +35,4 @@ def get_spread_dataframe():
     # Set the timestamp column as the index
     return df.set_index("timestamp")
 
-print(get_spread_dataframe())
+print(get_spread())
