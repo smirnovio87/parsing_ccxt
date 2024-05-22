@@ -13,9 +13,25 @@ symbol = "BTC/USDT"
 
 #Получаем список пар
 def get_symbol(exchange_id):
+    """
+    Get the list of symbols available on the specified exchange.
+
+    Args:
+        exchange_id (str): The ID of the exchange.
+
+    Returns:
+        List[str]: The list of symbols.
+    """
+    # Get the class of the exchange using its ID
     exchange_class = getattr(ccxt, exchange_id)
-    exchange= exchange_class()
+
+    # Create an instance of the exchange
+    exchange = exchange_class()
+
+    # Load the markets for the exchange
     markets = exchange.load_markets()
+
+    # Extract the keys (symbols) from the markets dictionary
     return list(markets.keys())
 
 #Выводим пары только с заданно   валютой (market_id="USDT")
